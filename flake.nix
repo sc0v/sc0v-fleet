@@ -16,7 +16,7 @@
     };
 
     # Fleet-owned source repositories.
-    cmutli-fleet-secrets = {
+    sc0v-fleet-secrets = {
       url = "git+ssh://git@github.com/sc0v/sc0v-fleet-secrets.git";
       flake = false;
     };

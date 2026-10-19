@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "cmutli-fleet-secrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792442105,
-        "narHash": "sha256-1mW8YN25ctvP05MfPuvAXWulj8ECifrjmHXP+HM76l8=",
-        "ref": "refs/heads/main",
-        "rev": "a8dda4f16a29b84059df539a6d690813c0e670c8",
-        "revCount": 2,
-        "type": "git",
-        "url": "ssh://git@github.com/sc0v/sc0v-fleet-secrets.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/sc0v/sc0v-fleet-secrets.git"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -54,10 +38,26 @@
     },
     "root": {
       "inputs": {
-        "cmutli-fleet-secrets": "cmutli-fleet-secrets",
         "disko": "disko",
         "nixpkgs": "nixpkgs",
+        "sc0v-fleet-secrets": "sc0v-fleet-secrets",
         "sops-nix": "sops-nix"
+      }
+    },
+    "sc0v-fleet-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792442105,
+        "narHash": "sha256-1mW8YN25ctvP05MfPuvAXWulj8ECifrjmHXP+HM76l8=",
+        "ref": "refs/heads/main",
+        "rev": "a8dda4f16a29b84059df539a6d690813c0e670c8",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/sc0v/sc0v-fleet-secrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/sc0v/sc0v-fleet-secrets.git"
       }
     },
     "sops-nix": {
