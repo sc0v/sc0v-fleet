@@ -1,0 +1,70 @@
+{ config, pkgs, inputs, ... }:
+
+{
+  imports = [
+    ./capabilities/krb5.nix
+    ./capabilities/secrets.nix
+    ./users/base.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    age
+    cowsay
+    curl
+    emacs-nox
+    git
+    htop
+    lshw
+    rsync
+    sops
+    tree
+    vim
+  ];
+
+  networking.firewall.enable = true;
+
+  # The explicit systemd-networkd DHCP rules below remain active.
+  networking.useDHCP = false;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  nix.optimise.automatic = true;
+  nix.settings.experimental-features = [ "flakes" "nix-command" ];
+
+  services.journald.extraConfig = ''
+    SystemMaxUse=256M
+    SystemKeepFree=1G
+  '';
+
+  sops.secrets.root-password-hash = {
+    sopsFile = inputs."sc0v-fleet-secrets" + "/fleet.yaml";
+    neededForUsers = true;
+  };
+
+  systemd.coredump.settings.Coredump.Storage = "none";
+
+  systemd.network = {
+    enable = true;
+    networks = {
+      "10-ethernet-dhcp" = {
+        matchConfig.Name = "en*";
+        networkConfig.DHCP = "yes";
+      };
+      "11-legacy-ethernet-dhcp" = {
+        matchConfig.Name = "eth*";
+        networkConfig.DHCP = "yes";
+      };
+    };
+  };
+
+  time.timeZone = "America/New_York";
+
+  users.users.root.hashedPasswordFile =
+    config.sops.secrets.root-password-hash.path;
+
+  zramSwap.enable = true;
+}
