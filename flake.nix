@@ -55,15 +55,8 @@
           };
         });
 
-      # #### Fleet hosts ####
-      # Add new entries below in alphabetical order.
-      #
-      # nixosConfigurations."keys-01.tli.cmu.edu" = mkHost
-      #   ./hosts/keys-01.tli.cmu.edu/configuration.nix
-      #   ./hosts/keys-01.tli.cmu.edu/disko.nix;
-      #
-      # nixosConfigurations."ops-01.tli.cmu.edu" = mkHost
-      #   ./hosts/ops-01.tli.cmu.edu/configuration.nix
-      #   ./hosts/ops-01.tli.cmu.edu/disko.nix;
+      nixosConfigurations."ops-01.springcarnival.org" = mkHost
+        ./hosts/ops-01.springcarnival.org/configuration.nix
+        ./hosts/ops-01.springcarnival.org/disko.nix;
     };
 }
