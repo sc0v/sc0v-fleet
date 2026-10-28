@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../profiles/mail.springcarnival.org.nix
   ];
 
   boot.loader = {
