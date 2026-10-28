@@ -1,5 +1,32 @@
-{ ... }:
+{ lib, pkgs, ... }:
 
+let
+  andrew = list: "carnival-${list}@andrew.cmu.edu";
+
+  forwards = {
+    "booth@springcarnival.org" = [ (andrew "booth") ];
+    "certificates@springcarnival.org" = [ (andrew "chair") (andrew "software") "merichar@merichar.org" ];
+    "computer@springcarnival.org" = [ (andrew "software") ];
+    "electrical@springcarnival.org" = [ (andrew "electrical") ];
+    "entertainment@springcarnival.org" = [ (andrew "entertainment") ];
+    "marketing@springcarnival.org" = [ (andrew "marketing") ];
+    "operations@springcarnival.org" = [ (andrew "operations") ];
+    "outreach@springcarnival.org" = [ (andrew "marketing") ];
+    "sc0v@springcarnival.org" = [ (andrew "chair") ];
+    "software@springcarnival.org" = [ (andrew "software") ];
+    "treasurer@springcarnival.org" = [ (andrew "finance") ];
+    "youtube@springcarnival.org" = [ (andrew "chair") ];
+    "itdirector@springcarnival.org" = [ (andrew "software") ];
+
+    # Catch-all: everything else (typos, old addresses) goes to the chair list.
+    "*" = [ (andrew "chair") ];
+  };
+
+  # lsearch* file: "address: target, target", with "*" as the default key.
+  aliases = pkgs.writeText "springcarnival-forwards" (lib.concatStrings (lib.mapAttrsToList
+    (address: targets: "${address}: ${lib.concatStringsSep ", " targets}\n")
+    forwards));
+in
 {
   # Install as profiles/mail.springcarnival.org.nix in the parallel fleet.
   imports = [ ../modules/capabilities/exim.nix ];
@@ -25,12 +52,10 @@
 
     begin routers
 
-    # Add a router like this for each public forwarding address.
-    carnival_chairs:
+    forwards:
       driver = redirect
       domains = springcarnival.org
-      local_parts = sc0v
-      data = carnival-chairs@andrew.cmu.edu
+      data = ''${lookup{$local_part@$domain}lsearch*{${aliases}}}
 
     remote_dns:
       driver = dnslookup
