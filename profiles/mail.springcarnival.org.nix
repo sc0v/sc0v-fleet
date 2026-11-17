@@ -15,6 +15,7 @@ let
     "sc0v@springcarnival.org" = [ (andrew "chair") ];
     "software@springcarnival.org" = [ (andrew "software") ];
     "treasurer@springcarnival.org" = [ (andrew "finance") ];
+    "finance@springcarnival.org" = [ (andrew "finance") ];
     "youtube@springcarnival.org" = [ (andrew "chair") ];
     "itdirector@springcarnival.org" = [ (andrew "software") ];
 
